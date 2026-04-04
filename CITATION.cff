@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+message: "If you use this software in your research, please cite it as below."
+type: software
+title: "LOUCETIUS: GPU-Accelerated Quantum-Inspired QUBO Solver"
+authors:
+  - family-names: Hayes
+    given-names: Christian
+    email: ceh303@gmail.com
+version: "2.5"
+date-released: "2026-04-01"
+url: "https://github.com/ceh303-tech/LOUCETIUS"
+repository-code: "https://github.com/ceh303-tech/loucetius"
+license: AGPL-3.0-or-later
+keywords:
+  - QUBO
+  - quantum-inspired
+  - optimisation
+  - GPU
+  - CUDA
+  - combinatorial-optimisation
+  - simulated-annealing
+  - Kerr-oscillator
+abstract: >-
+  LOUCETIUS is a GPU-accelerated, quantum-inspired solver for Quadratic
+  Unconstrained Binary Optimisation (QUBO) problems. It provides four
+  solver engines (spectral swarm annealing, Kerr wave oscillator,
+  hybrid blend, and cuSPARSE) with automatic problem routing. Built
+  with C++/LibTorch and accessible via a Python API.

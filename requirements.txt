@@ -1,0 +1,79 @@
+# -- Locetius v2.5 Runtime Requirements ---------------------------------------
+#
+# GPU Requirements
+#   NVIDIA GPU with compute capability sm_86+  (RTX 20-series and above)
+#   CUDA 12.1+  (driver >= 527.41)
+#   VRAM:  >= 4 GB for 64 worlds  |  >= 24 GB for 128 worlds
+#
+# Install via pip
+#   pip install -r requirements.txt
+#
+# PyTorch must be installed with CUDA support FIRST:
+#   pip install torch==2.3.0+cu121 --index-url https://download.pytorch.org/whl/cu121
+#
+# For KERR / HYBRID engines (CuPy NVRTC  -  optional but recommended):
+#   pip install cupy-cuda12x
+#
+# -----------------------------------------------------------------------------
+
+# Core scientific
+numpy>=1.26,<3.0
+scipy>=1.11
+
+# PyTorch (SPARSE + engine support)  -  install with CUDA as shown above
+torch>=2.0
+
+# CuPy (KERR + HYBRID engines)
+# Install separately with: pip install cupy-cuda12x
+# cupy-cuda12x
+
+# REST server
+fastapi>=0.110
+uvicorn[standard]>=0.27
+
+# GUI
+PyQt6>=6.6
+pyqtgraph>=0.13           # live charts  -  optional but recommended
+matplotlib>=3.8           # sparsity pattern visualisation  -  optional
+
+# REST client in GUI
+requests>=2.31
+
+# GPU monitoring in GUI (optional)
+# pynvml>=11.5              # pip install nvidia-ml-py  (live GPU util/temp)
+
+#
+# GPU Requirements
+#   NVIDIA GPU with compute capability sm_86+  (RTX 20-series and above)
+#   CUDA 12.6  (driver >= 527.41)
+#   VRAM       >= 4 GB recommended
+#
+# Install via pip
+#   pip install -r requirements.txt
+#
+# PyTorch must be installed with CUDA support FIRST:
+#   pip install torch==2.5.1+cu121 --index-url https://download.pytorch.org/whl/cu121
+#
+# The DLL bundle (LOUCETIUS_core.dll + *.dll) includes LibTorch 2.5.1.
+# No separate LibTorch install is required at runtime  -  just keep all DLLs
+# in the same directory as LOUCETIUS_api.py.
+# -----------------------------------------------------------------------------
+
+# Core scientific
+numpy>=1.26,<3.0
+scipy>=1.11
+
+# REST server
+fastapi>=0.110
+uvicorn[standard]>=0.27
+
+# GUI
+PyQt6>=6.6
+pyqtgraph>=0.13           # live charts in GUI  -  optional but recommended
+matplotlib>=3.8           # sparsity pattern visualisation  -  optional
+
+# REST client in GUI
+requests>=2.31
+
+# GPU monitoring in GUI (optional)
+# pynvml>=11.5              # pip install nvidia-ml-py  (live GPU util/temp bars)

@@ -1,0 +1,252 @@
+LOCETIUS v1.0 - INSTALLATION & STARTUP GUIDE
+=============================================
+
+This document describes how to install and run Locetius v1.0 on Windows and Linux systems.
+
+---
+
+WINDOWS INSTALLATION & STARTUP
+===============================
+
+Prerequisites:
+  - Windows 10 or Windows 11
+  - NVIDIA GPU with CUDA Compute Capability 7.0+ (GeForce RTX 20-series or newer)
+  - NVIDIA Driver 560+ (automatically includes CUDA libraries)
+
+Step 1: Download and Extract
+  1. Download the Locetius_v1.0_production.zip file
+  2. Right-click and select "Extract All"
+  3. Choose a location (e.g., C:\Locetius_v1.0\)
+
+Step 2: Install Python 3.10+
+  1. Go to python.org
+  2. Download Python 3.10 or newer
+  3. Run the installer
+  4. IMPORTANT: Check "Add Python to PATH" during installation
+  5. Verify installation by opening Command Prompt and typing:
+     python --version
+     (should show Python 3.10.x or newer)
+
+Step 3: Install Dependencies
+  1. Open Command Prompt
+  2. Navigate to the extracted directory:
+     cd C:\Locetius_v1.0
+  3. Install required Python packages:
+     pip install -r requirements.txt
+  4. Wait for installation to complete (2-3 minutes)
+
+Step 4a: Launch GUI (Recommended for Most Users)
+  Option 1: Double-click RUN_GUI.bat
+  Option 2: Open Command Prompt and type:
+    python locetius_gui_v2.py
+
+  The GUI window will appear with:
+    - File import buttons (MTX, CSV)
+    - Hyperparameter sliders
+    - GPU monitoring tab
+    - Live energy chart
+    - Export options
+
+Step 4b: Launch REST API Server (For Integration)
+  Open Command Prompt and type:
+    python locetius_server.py
+  
+  Server will start on http://localhost:8765
+  Test with:
+    curl http://localhost:8765/health
+
+Troubleshooting Windows:
+  Q: "Python not found" error
+  A: Python not in PATH. Reinstall Python and check "Add Python to PATH"
+  
+  Q: "CUDA not found" error
+  A: Update NVIDIA driver from nvidia.com
+     Ensure driver version 560+
+  
+  Q: GUI window doesn't open
+  A: Try manual launch:
+     python locetius_gui_v2.py
+     Check PowerShell console for error messages
+
+---
+
+LINUX INSTALLATION & STARTUP
+=============================
+
+Prerequisites:
+  - Ubuntu 20.04 LTS, Ubuntu 22.04 LTS, or CentOS 7/8
+  - NVIDIA GPU with CUDA Compute Capability 7.0+ (GeForce RTX 20-series or newer)
+  - NVIDIA Driver 560+
+
+Step 1: Download and Extract
+  1. Download Locetius_v1.0_production.zip
+  2. Extract the archive:
+     unzip Locetius_v1.0_production.zip
+     cd Locetius_v1.0
+
+Step 2: Install System Dependencies
+  
+  Ubuntu/Debian:
+    sudo apt update
+    sudo apt install python3.10 python3.10-dev python3-pip
+    sudo apt install libopenblas-dev liblapack-dev gfortran
+    sudo apt install libxkbcommon-x11-0  # For GUI
+  
+  Fedora/CentOS:
+    sudo yum install python310 python310-devel
+    sudo yum install openblas-devel lapack-devel gcc-gfortran
+    sudo yum install libxkbcommon-x11  # For GUI
+
+Step 3: Install CUDA Toolkit (Optional but Recommended)
+  1. Visit developer.nvidia.com/cuda-downloads
+  2. Select your OS and download CUDA 12.1+
+  3. Install following on-screen instructions
+  4. Verify installation:
+     nvcc --version
+     nvidia-smi
+
+Step 4: Install Python Dependencies
+  In the Locetius directory, run:
+    pip install -r requirements.txt
+  
+  Wait for installation (2-3 minutes)
+
+Step 5a: Launch GUI (Recommended for Most Users)
+  Option 1: Make RUN_GUI.sh executable and run it:
+    chmod +x RUN_GUI.sh
+    ./RUN_GUI.sh
+  
+  Option 2: Direct command:
+    python3 locetius_gui_v2.py
+  
+  The GUI window will appear with all Locetius features
+
+Step 5b: Launch REST API Server (For Integration)
+  Make the script executable:
+    chmod +x RUN_SERVER.sh
+    ./RUN_SERVER.sh
+  
+  Or run directly:
+    python3 locetius_server.py
+  
+  Server will start on http://localhost:8765
+
+Troubleshooting Linux:
+  Q: "ImportError: No module named PyQt6" or "ModuleNotFoundError"
+  A: Install PyQt6:
+     pip install PyQt6
+  
+  Q: "libcuda.so not found" error
+  A: Set CUDA library path:
+     export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
+     Then try again
+  
+  Q: GUI window doesn't appear (Xvfb/headless)
+  A: This is a headless environment. Use REST API instead:
+     python3 locetius_server.py
+     Then access via HTTP from another machine
+  
+  Q: "Permission denied" when running .sh files
+  A: Make files executable:
+     chmod +x RUN_GUI.sh
+     ./RUN_GUI.sh
+
+---
+
+PYTHON API USAGE
+================
+
+Instead of the GUI or REST server, you can use Python directly:
+
+  import numpy as np
+  from locetius_api import LOUCETIUSSolver, SwarmConfig
+  
+  # Create a simple QUBO problem
+  Q = np.array([
+      [1.0, 0.5],
+      [0.5, 2.0]
+  ])
+  
+  # Configure solver
+  config = SwarmConfig(
+      num_variables=2,
+      annealing_steps=1000,
+      thermal_melt=0.2
+  )
+  
+  # Solve
+  solver = LOUCETIUSSolver()
+  result = solver.solve(Q, config)
+  
+  print(f"Best solution: {result.best_solution}")
+  print(f"Energy: {result.best_energy}")
+  print(f"Consensus: {result.consensus}%")
+
+---
+
+BENCHMARK: L-BRACKET OPTIMIZATION
+==================================
+
+Included benchmark: benchmarks/L_Bracket_Benchmark.mtx (6,519 variables)
+
+To test with your own data:
+  1. Load the .MTX file in the GUI
+  2. Click "Solve with Locetius"
+  3. Watch the energy curve in real-time
+  4. Export solution as CSV or STL
+
+To regenerate with different heuristics:
+  python scripts/l_bracket_generator.py
+  (Modify VOLUME_PENALTY, NEIGHBOR_REWARD, LOAD_PATH_REWARD in the script)
+
+---
+
+TESTING YOUR INSTALLATION
+==========================
+
+Quick test to verify everything is working:
+
+Windows Command Prompt:
+  cd C:\Locetius_v1.0
+  python -c "from locetius_api import LOUCETIUSSolver; print('API OK')"
+
+Linux Terminal:
+  cd ~/Locetius_v1.0
+  python3 -c "from locetius_api import LOUCETIUSSolver; print('API OK')"
+
+Expected output: "API OK"
+
+---
+
+GETTING HELP
+============
+
+1. Check README.md for overview
+2. See LOCETIUS_USER_MANUAL.docx for comprehensive guide (40+ pages)
+3. Review locetius_integration_example.py for code examples
+4. Check solver output logs for specific errors
+
+For support:
+  - Email: support@locetius.com
+  - Documentation: See docs/LOCETIUS_USER_MANUAL.docx
+
+---
+
+NEXT STEPS
+==========
+
+After installation:
+
+  Windows Users:
+    1. Double-click RUN_GUI.bat
+    2. Click "Import File" and select benchmarks/L_Bracket_Benchmark.mtx
+    3. Click "Solve with Locetius"
+    4. Watch the energy curve drop in real-time
+    5. View GPU stats in the GPU tab
+    6. Export solution as CSV, JSON, or STL
+
+  Linux Users:
+    1. Run: ./RUN_GUI.sh
+    2. Same steps as above
+
+That's it! You're now ready to solve QUBO problems with Locetius v1.0.

@@ -1,0 +1,174 @@
+﻿LOUCETIOS QUANTUM TOPOLOGY ENGINE
+DUAL LICENSE AGREEMENT
+
+The Loucetios Quantum Topology Engine is dual-licensed to accommodate both open-source research and commercial enterprise usage.
+
+================================================================================
+
+1. OPEN SOURCE / ACADEMIC USE (GNU AGPLv3)
+
+For personal, academic, and open-source projects, Loucetios is licensed under the GNU Affero General Public License v3.0 (AGPLv3). 
+
+Under this license, you may use, modify, and distribute the software, provided that any derivative works or network-hosted services utilizing this software are also completely open-sourced under the AGPLv3.
+
+A copy of the AGPLv3 license can be found at: https://www.gnu.org/licenses/agpl-3.0.html
+
+Permitted Uses:
+  âœ“ Academic research and education
+  âœ“ Open-source projects (GPL-compatible)
+  âœ“ Personal non-commercial use
+  âœ“ Internal research within universities
+
+Restrictions:
+  âœ— Cannot use in proprietary, closed-source software
+  âœ— If modified, derivative works must also be open-sourced under AGPLv3
+  âœ— If used in a network service, the service code must be open-sourced
+
+================================================================================
+
+2. COMMERCIAL / PROPRIETARY USE
+
+If you intend to use Loucetios within a proprietary, closed-source, or commercial software environmentâ€”or if you cannot comply with the open-source requirements of the AGPLv3â€”you must obtain a separate Commercial License.
+
+A Commercial License grants you the rights to use, integrate, and distribute the Loucetios engine within your proprietary applications without the obligation to open-source your proprietary code.
+
+To inquire about a Commercial License, contact:
+  Email: ceh303@gmail.com
+
+Commercial License Includes:
+  âœ“ Proprietary use without open-sourcing
+  âœ“ Integration into closed-source products
+  âœ“ Distribution of compiled binaries
+  âœ“ Priority support and maintenance
+  âœ“ Custom engine tuning for your domain
+
+License Fee:
+  Negotiated per organization and use case.
+
+================================================================================
+
+3. DETERMINING YOUR LICENSING REQUIREMENTS
+
+Does your use fall under Open Source (AGPLv3)?
+  â†’ Use for academic research: YES
+  â†’ Use in open-source projects: YES
+  â†’ Use in closed-source products: NO
+  â†’ Use in commercial services (SaaS): NO
+  â†’ Use in proprietary internal tools: NO
+
+If you answered NO to any of the above, you need a Commercial License.
+
+================================================================================
+
+4. NO WARRANTY
+
+LOUCETIOS IS PROVIDED "AS IS," WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+PARTICULAR PURPOSE, AND NONINFRINGEMENT.
+
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES, OR OTHER LIABILITY ARISING FROM THE USE OF OR INABILITY TO USE
+LOUCETIOS.
+
+================================================================================
+
+5. TRADEMARK & ATTRIBUTION
+
+The name "Loucetios" and any associated logos are trademarks of Christian Hayes.
+You may not use these trademarks without explicit written permission.
+
+When using Loucetios in academic publications, you must cite:
+
+  @software{loucetios2026,
+    author   = {Christian Hayes},
+    title    = {Loucetios: Quantum-Inspired Optimization Engine},
+    year     = {2026},
+    url      = {https://github.com/ceh303/loucetios}
+  }
+
+================================================================================
+
+6. TERMINATION
+
+Any violation of the terms of this license will immediately terminate your rights
+under this license. Upon termination, you must cease all use and distribution of
+Loucetios.
+
+================================================================================
+
+7. GOVERNING LAW
+
+This license agreement is governed by the laws of England and Wales, without
+regard to its conflict of law provisions.
+
+================================================================================
+
+COPYRIGHT Â© 2026 Christian Hayes. ALL RIGHTS RESERVED.
+
+For questions about licensing, contact: ceh303@gmail.com
+
+================================================================================
+
+FREQUENTLY ASKED QUESTIONS
+
+Q1: I'm an academic researcher. Can I use Loucetios for free?
+A: Yes! Use under AGPLv3. If you publish or distribute your work, cite Loucetios.
+
+Q2: I'm building a commercial product. Do I need a commercial license?
+A: If your product is closed-source or proprietary, yes. Contact ceh303@gmail.com
+
+Q3: I'm a student building a project in a startup. What do I need?
+A: If the startup will open-source the project, AGPLv3. If not, commercial license.
+
+Q4: Can I modify Loucetios under AGPLv3?
+A: Yes, but your modifications must also be open-sourced under AGPLv3.
+
+Q5: What if I use Loucetios in a web service (SaaS)?
+A: You must obtain a Commercial License. AGPLv3 requires that SaaS code be
+   open-sourced, which is unacceptable for proprietary business models.
+
+Q6: How much does a Commercial License cost?
+A: Negotiable. Email ceh303@gmail.com with your use case.
+
+Q7: Can I get a Commercial License for a research spin-out company?
+A: Yes. Contact ceh303@gmail.com to discuss academic pricing.
+
+Q8: What if I violate the license?
+A: Your license is terminated, and you must cease use immediately.
+   Copyright holder may pursue legal action.
+
+================================================================================
+
+LICENSE SUMMARY TABLE
+
+Use Case                          | Licensing Required
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•ªâ•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+Academic research                 | AGPLv3 (free)
+University spin-out company       | Commercial (discounted)
+Open-source software              | AGPLv3 (free)
+Proprietary closed-source product | Commercial License
+SaaS / Hosted service             | Commercial License
+Internal corporate tool           | Commercial License
+Educational institution           | AGPLv3 (free)
+Non-profit research               | AGPLv3 (free)
+
+================================================================================
+
+CONTACT & SUPPORT
+
+Commercial Licensing:
+  Email:   ceh303@gmail.com
+  Website: https://github.com/ceh303/loucetios
+  Phone:   (see GitHub issues)
+
+Academic Inquiries:
+  Email:   ceh303@gmail.com
+
+Technical Support:
+  GitHub Issues: https://github.com/ceh303/loucetios/issues
+  Email:        ceh303@gmail.com
+
+================================================================================
+
+Version: 1.0
+Last Updated: April 1, 2026

@@ -1,0 +1,176 @@
+LOCETIUS v1.0 - COMPATIBILITY TESTING
+====================================
+
+Before launching Locetius, verify your system is compatible.
+
+---
+
+WINDOWS USERS
+=============
+
+Run the compatibility test:
+  TEST_WINDOWS_COMPATIBILITY.bat
+
+Or manually in Command Prompt:
+  python --version                    (should show Python 3.10+)
+  nvidia-smi                          (should show NVIDIA GPU)
+  pip install -r requirements.txt     (install dependencies)
+
+Expected output:
+  [ok] Python 3.10+ detected
+  [ok] NVIDIA GPU detected
+  [ok] All modules import successfully
+  [ok] File I/O operations work
+
+If all checks pass:
+  double-click RUN_GUI.bat
+
+---
+
+LINUX USERS
+===========
+
+Run the compatibility test:
+  python3 test_linux_compatibility.py
+
+Or in terminal:
+  python3 --version                  (should show Python 3.10+)
+  nvidia-smi                         (should show NVIDIA GPU)
+  pip install -r requirements.txt    (install dependencies)
+
+Expected output:
+  [OK] Platform: Linux
+  [OK] NumPy, SciPy, PyQt6, Flask loaded
+  [OK] CUDA runtime available
+  [OK] 1 GPU(s) detected
+  [OK] Solver API loads
+  [OK] All operations work
+
+If all checks pass:
+  bash RUN_GUI.sh
+
+---
+
+TROUBLESHOOTING
+===============
+
+"Python not found":
+  -> Install Python 3.10+ from python.org (Windows) or apt install python3 (Linux)
+
+"NVIDIA GPU not detected":
+  -> Update driver from nvidia.com
+  -> Ensure driver version 560+
+  -> Check: nvidia-smi
+
+"Module import fails (NumPy, SciPy, etc.)":
+  -> Run: pip install -r requirements.txt
+  -> Wait for installation (2-3 minutes)
+
+"GUI won't open":
+  -> Try: python3 locetius_gui_v2.py (show error messages)
+  -> Or use REST API: python3 locetius_server.py
+
+"Solver crashes":
+  -> Check test output for specific errors
+  -> Verify GPU has free VRAM (check nvidia-smi)
+
+---
+
+WHAT GETS TESTED
+================
+
+1. Platform Detection
+   - Confirms you're on Windows or Linux
+   - Shows Python version
+
+2. Core Modules
+   - NumPy (matrix operations)
+   - SciPy (sparse matrices)
+   - PyQt6 (GUI framework)
+   - Flask (REST server)
+   - Other dependencies
+
+3. GPU/CUDA
+   - NVIDIA driver availability
+   - CUDA runtime
+   - GPU device count and names
+   - VRAM availability
+
+4. Solver API
+   - Core solver module loads
+   - LOUCETIUSSolver class instantiates
+   - SwarmConfig configuration works
+
+5. GUI Module
+   - PyQt6 can load GUI code
+   - Window class definitions valid
+
+6. File I/O
+   - CSV read/write operations
+   - JSON operations
+   - Temporary file handling
+
+7. Matrix Operations
+   - NumPy arrays
+   - SciPy sparse matrices (COO format)
+   - Matrix math operations
+
+---
+
+IF ALL TESTS PASS
+=================
+
+Your system is ready for Locetius v1.0.
+
+Windows:  double-click RUN_GUI.bat
+Linux:    bash RUN_GUI.sh
+
+Then:
+  1. Click "Import File"
+  2. Select benchmarks/L_Bracket_Benchmark.mtx
+  3. Click "Solve with Locetius"
+  4. Watch real-time energy convergence
+  5. Export results as CSV, JSON, or STL
+
+---
+
+IF TESTS FAIL
+=============
+
+Check the specific [FAIL] messages and:
+
+1. Install missing dependencies:
+   pip install -r requirements.txt
+
+2. Update NVIDIA driver:
+   Visit nvidia.com and download latest
+
+3. Install system libraries (Linux):
+   Ubuntu: sudo apt install python3-dev libopenblas-dev
+   Fedora: sudo yum install python3-devel openblas-devel
+
+4. Contact support if issues persist:
+   support@locetius.com
+
+---
+
+SYSTEM REQUIREMENTS
+===================
+
+Minimum:
+  OS: Windows 10+ or Linux Ubuntu 20.04+
+  CPU: 8 cores
+  RAM: 8 GB
+  GPU: NVIDIA RTX 20-series or newer
+  Python: 3.10+
+
+Recommended:
+  OS: Windows 11 or Ubuntu 22.04 LTS
+  CPU: 16+ cores
+  RAM: 32 GB
+  GPU: NVIDIA RTX 4090
+  Python: 3.11 or 3.12
+
+---
+
+That's it! The compatibility test ensures you have everything needed.

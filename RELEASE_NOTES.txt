@@ -1,0 +1,408 @@
+LOCETIUS v2.5 - RELEASE NOTES
+============================
+
+Release Date: April 2026
+Version: 2.5 (Multi-Engine Commercial Release)
+
+---
+
+WHAT'S NEW IN v2.5
+==================
+
+New Solver Engines
+------------------
+* KERR Wave Engine  - Quantum-inspired Kerr-nonlinear optical network solver
+  Uses CuPy NVRTC GPU kernels simulating parametric oscillator networks.
+  Ideal for dense combinatorial problems.
+* HYBRID Blend Engine  - Weighted fusion of Spectral Swarm and Kerr Wave
+  Adjustable blend slider: 0 = pure Kerr, 1 = pure Locetius (Spectral Swarm).
+  Automatically selects the best-energy result.
+* SPARSE CUDA Engine  - cuSPARSE SpMM-based solver for very large sparse problems
+  Activates automatically for N > 10,000 with sparsity > 95%.
+  Scales to N > 200,000 variables on 4 GB VRAM.
+* AUTO Smart Route  - Engine selected automatically based on matrix size, density,
+  and available GPU memory.
+
+Parallel Worlds (Swarms)
+------------------------
+* 64-swarm mode: Optimal for consumer GPUs (RTX 20/30/40 series 4-8 GB VRAM)
+* 128-swarm mode: New for high-VRAM GPUs (RTX 3090 / 4090 / A100 24+ GB VRAM)
+* Selectable at runtime via the Parallel Worlds toggle in the GUI
+
+GUI Enhancements
+-----------------
+* Engine Selector dropdown (AUTO / LOCETIUS / KERR / HYBRID / SPARSE)
+* Parallel Worlds toggle (64 / 128 swarms)  -  live, no restart required
+* Hybrid Blend slider (shown only in HYBRID mode): dial from Kerr to Locetius
+* Physics Mode section replaces Solver Mode (now clearly LOCETIUS-specific)
+* Version badge updated to v2.5
+
+API Changes (locetius_api.py)
+------------------------------
+* SwarmConfig new fields:
+    engine: str = "AUTO"           # "AUTO"|"LOCETIUS"|"KERR"|"HYBRID"|"SPARSE"
+    locetius_weight: float = 0.5   # 0.0 = pure Kerr, 1.0 = pure Locetius
+    pump_amplitude: float = 0.7    # Kerr pump strength
+    kerr_nonlinearity: float = 0.5 # Kerr nonlinear coefficient
+* num_swarms: now accepts 64 OR 128 (previously 64 only)
+
+---
+
+WHAT'S NEW IN v1.0 (retained)
+==============================
+
+Core Engine
+-----------
+* Spectral Swarm Engine - Proprietary continuous-relaxation solver
+* CUDA 12.1+ GPU acceleration
+* Multi-phase solving: continuous relaxation -> spatial phase -> deterministic freeze
+* Automatic early stopping (patience-based)
+
+GUI Interface (PyQt6)
+---------------------
+* Professional dark-theme dashboard
+* Real-time energy convergence plotting
+* Live GPU statistics (temperature, VRAM, utilisation, clocks)
+* Network graph visualization of solutions
+* Drag-and-drop file import (.MTX, .CSV, .npz, .json)
+* Three export formats (CSV, JSON, STL)
+* Random test data generation for quick testing
+
+APIs & Integration
+------------------
+* Python SDK with type hints
+* REST API server (Flask, port 8765)
+* Direct NumPy/SciPy integration
+* C/C++ header reference for custom integration
+
+---
+
+SYSTEM REQUIREMENTS
+===================
+
+Minimum:
+  OS: Windows 10+ or Linux (Ubuntu 20.04+)
+  CPU: 8 cores
+  RAM: 8 GB
+  GPU: NVIDIA RTX 20-series or newer (CUDA 7.0+)
+  Storage: 500 MB
+
+Recommended:
+  OS: Windows 11 or Ubuntu 22.04 LTS
+  CPU: 16+ cores
+  RAM: 32 GB
+  GPU: NVIDIA RTX 40-series (4090 optimal)
+  Storage: 2 GB (128 worlds requires 24+ GB VRAM)
+
+Tested Configurations:
+  - Windows 11, RTX 2050 (4 GB), CUDA 12.1   -  64 worlds, all engines
+  - Ubuntu 22.04, RTX 4090 (24 GB), CUDA 12.2  -  128 worlds, all engines
+  - Windows 10, RTX 3090 (24 GB), CUDA 12.1   -  128 worlds confirmed
+
+---
+
+KNOWN LIMITATIONS
+=================
+
+* 128 worlds requires ~12 GB VRAM minimum (use 64 worlds on 4-8 GB cards)
+* KERR engine requires CuPy (cupy-cuda12x); falls back to LOCETIUS if absent
+* SPARSE engine requires torch with CUDA; activates only for N > 10,000
+* NVIDIA GPU required (no CPU fallback)
+* STL export limited to 500 most-connected nodes for N > 500
+
+---
+
+PERFORMANCE BENCHMARKS
+======================
+
+Engine: LOCETIUS (Spectral Swarm, 64 worlds)
+Problem: L-Bracket (6,519 vars, 31,600 nnz) | RTX 2050
+Time: ~60 s | Energy: -13,356 | Consensus: 32%
+
+Engine: HYBRID (50% blend, 64 worlds)
+Problem: 100-var dense QUBO | RTX 2050
+Time: ~4 s  | Energy: -2.0 (best across engines)
+
+Engine: SPARSE (cuSPARSE SpMM, 64 worlds)
+Problem: 216,000-var 3D lattice (60^3) | RTX 2050
+Time: ~8 s  | Energy converged | VRAM: ~2.1 GB
+
+---
+
+BREAKING CHANGES FROM v1.0
+============================
+
+* SwarmConfig: Added engine, locetius_weight, pump_amplitude, kerr_nonlinearity
+* num_swarms: 128 now valid (was clamped to 64)
+* GUI: "Solver Mode" renamed to "Physics Mode"
+* DLL/SO: Same binary, new version string 2.5.0-cuda121-libtorch230
+
+Upgrade path from v1.0:
+  1. Replace old locetius_api.py with new version
+  2. Replace old locetius_gui_v2.py with new version
+  3. No changes needed to existing QUBO matrix files
+  4. Engine field defaults to AUTO (backward-compatible)
+
+---
+
+TRADE SECRETS & OBFUSCATION
+============================
+
+* Engine source code: NOT INCLUDED  -  compiled to bytecode only
+* DLL/SO binaries: Obfuscated compiled binary
+* Reverse engineering strictly prohibited (see LICENSE)
+* Commercial license required for production use
+
+---
+
+INSTALLATION NOTES
+==================
+
+Windows:
+  1. Extract ZIP file
+  2. Install Python 3.10+
+  3. pip install -r requirements.txt
+  4. Double-click RUN_GUI.bat
+  5. Ensure NVIDIA driver 560+
+
+Linux:
+  1. Extract ZIP file
+  2. sudo apt install python3.10 python3.10-dev
+  3. pip install -r requirements.txt
+  4. chmod +x RUN_GUI.sh && ./RUN_GUI.sh
+  5. Ensure CUDA 12.1+ installed
+
+See INSTALL.txt for detailed steps.
+
+
+---
+
+WHAT'S NEW IN v1.0
+==================
+
+Core Engine
+-----------
+* Spectral Swarm Engine - Proprietary continuous-relaxation solver
+* 64-swarm parallel processing (hardware-optimized)
+* CUDA 12.1+ GPU acceleration
+* Multi-phase solving: continuous relaxation -> spatial phase -> deterministic freeze
+* Automatic early stopping (patience-based)
+
+GUI Interface (PyQt6)
+---------------------
+* Professional dark-theme dashboard
+* Real-time energy convergence plotting
+* Live GPU statistics (temperature, VRAM, utilisation, clocks)
+* Network graph visualization of solutions
+* Drag-and-drop file import (.MTX, .CSV, .npz, .json)
+* Hyperparameter control with physics-based presets
+* Phase 3 deterministic freeze toggle
+* Early stopping patience configuration
+* Three export formats (CSV, JSON, STL)
+* Active swarm telemetry badge
+* Random test data generation for quick testing
+
+APIs & Integration
+------------------
+* Python SDK with type hints
+* REST API server (Flask, port 8765)
+* Symmetric QUBO support (sparse matrices)
+* Direct NumPy/SciPy integration
+* C/C++ header reference for custom integration
+
+Benchmarks
+----------
+* L-Bracket Topology Optimization (6,519 variables)
+* Realistic structural design test case
+* Modifiable heuristics for benchmark generation
+
+Cross-Platform
+---------------
+* Windows: locetius_core.dll (obfuscated x86-64)
+* Linux: liblocetius_core.so (obfuscated x86-64)
+* Automatic platform detection
+* Single codebase for both platforms
+
+---
+
+SYSTEM REQUIREMENTS
+===================
+
+Minimum:
+  OS: Windows 10+ or Linux (Ubuntu 20.04+)
+  CPU: 8 cores
+  RAM: 8 GB
+  GPU: NVIDIA RTX 20-series or newer (CUDA 7.0+)
+  Storage: 500 MB
+
+Recommended:
+  OS: Windows 11 or Ubuntu 22.04 LTS
+  CPU: 16+ cores
+  RAM: 32 GB
+  GPU: NVIDIA RTX 40-series (4090 optimal)
+  Storage: 2 GB
+
+Tested On:
+  - Windows 11, RTX 2050, CUDA 12.1
+  - Ubuntu 22.04, RTX 4090, CUDA 12.2
+  - Windows 10, RTX 3090, CUDA 12.1
+
+---
+
+KNOWN LIMITATIONS
+=================
+
+* Matrix size limit: ~50,000 variables (memory-constrained)
+* NVIDIA GPU required (no CPU fallback in this version)
+* Early stopping patience: Does not guarantee optimal solution
+* Phase 3 deterministic freeze: Irreversible (locked to best solution found)
+* STL export: Limited to 500 most-connected nodes for large problems (>500 vars)
+
+---
+
+PERFORMANCE BENCHMARKS
+======================
+
+Problem: L-Bracket (6,519 variables, 31,600 non-zeros)
+GPU: NVIDIA RTX 2050
+Time: ~60 seconds
+Energy: -13,356 (convergence achieved)
+Consensus: 32.2% (swarm agreement)
+
+Problem: 100-variable QUBO
+GPU: NVIDIA RTX 2050
+Time: ~7 seconds
+Energy: -12.5 (exemplary)
+Consensus: 85%+ (high agreement)
+
+---
+
+BREAKING CHANGES FROM EARLIER BUILDS
+====================================
+
+If upgrading from beta/alpha versions:
+
+* Old "LOUCETIUS_*" filenames -> new "locetius_*" (spelling correction)
+* API class name: LOUCETIUSSolver (unchanged)
+* SwarmConfig: Added phase3_enforce and early_stopping_patience fields
+* GUI layout: Completely redesigned for commercial use
+* REST API: /solve endpoint signature unchanged
+* DLL/SO location: Now in locetius_core/ subdirectory
+
+Upgrade Path:
+  1. Back up your old .mtx files and solutions
+  2. Delete old installation directory
+  3. Extract new production release
+  4. Reinstall dependencies: pip install -r requirements.txt
+  5. Update any custom scripts with new SwarmConfig fields
+
+---
+
+BUG FIXES SINCE v0.9
+====================
+
+* Fixed STL export generating zero-triangle files
+* Fixed View Solution Graph button visibility
+* Fixed Unicode encoding issues in Windows tests
+* Fixed L-bracket topology auto-detection
+* Fixed GPU stats background worker graceful error handling
+* Fixed server timeout during DLL loading
+* Corrected em-dash encoding in docstrings
+* Fixed over-clumping in L-bracket mesh generation
+* Fixed early stopping patience parameter binding
+
+---
+
+TRADE SECRETS & OBFUSCATION
+============================
+
+The Spectral Swarm Engine algorithm is proprietary and protected:
+
+* Source code: NOT INCLUDED (confidential)
+* DLL/SO binaries: Obfuscated and packed
+* Reverse engineering: Strictly prohibited
+* Licensing: Commercial license required for use
+
+The obfuscated binaries are 7-zip compressed and include:
+* SHA256-based integrity checks
+* Timestamp-based licensing (can be disabled with policy file)
+* Hardware fingerprinting (optional)
+
+---
+
+INSTALLATION NOTES
+==================
+
+Windows:
+  1. Extract ZIP file
+  2. Install Python 3.10+
+  3. pip install -r requirements.txt
+  4. Double-click RUN_GUI.bat
+  5. Ensure NVIDIA driver 560+
+
+Linux:
+  1. Extract ZIP file
+  2. sudo apt install python3.10 python3.10-dev
+  3. pip install -r requirements.txt
+  4. chmod +x RUN_GUI.sh && ./RUN_GUI.sh
+  5. Ensure CUDA 12.1+ installed
+
+See INSTALL.txt for detailed steps.
+
+---
+
+GETTING STARTED
+===============
+
+Quick Start (GUI):
+  Windows: Double-click RUN_GUI.bat
+  Linux: bash RUN_GUI.sh
+  -> Load benchmarks/L_Bracket_Benchmark.mtx
+  -> Click "Solve with Locetius"
+  -> Export results as CSV/JSON/STL
+
+API Example:
+  from locetius_api import LOUCETIUSSolver, SwarmConfig
+  solver = LOUCETIUSSolver()
+  config = SwarmConfig(num_variables=100, annealing_steps=2000)
+  result = solver.solve(Q_matrix, config)
+
+REST Example:
+  python locetius_server.py  # Start server
+  curl -X POST http://localhost:8765/solve -d '{"Q_dense": [[1, 0.5], [0.5, 2]]}'
+
+See README.md and docs/LOCETIUS_USER_MANUAL.docx for full documentation.
+
+---
+
+SUPPORT & CONTACT
+=================
+
+Documentation: docs/LOCETIUS_USER_MANUAL.docx (40+ pages)
+Examples: locetius_integration_example.py
+Support: support@locetius.com
+License: Proprietary - See LICENSE file if included
+
+---
+
+LICENSING
+=========
+
+Locetius v1.0 is commercial software. Unlicensed use is prohibited.
+
+License includes:
+  * Single machine deployment
+  * Python SDK and REST API access
+  * GUI application
+  * L-Bracket benchmark
+  * Email support
+
+For licensing inquiries: sales@locetius.com
+
+---
+
+END OF RELEASE NOTES
+====================
+
+Version 1.0 is production-ready and approved for commercial distribution.
+Welcome to the next generation of QUBO solving.

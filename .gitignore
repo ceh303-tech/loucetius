@@ -1,0 +1,52 @@
+# ── Locetius v2.5 — .gitignore ───────────────────────────────────────────────
+
+# Python bytecode cache — keep __pycache__/*.pyc (obfuscated engine bytecode)
+# but ignore any auto-generated .pyc for user-facing scripts
+locetius_api.cpython-*.pyc
+locetius_gui_v2.cpython-*.pyc
+locetius_server.cpython-*.pyc
+locetius_integration_example.cpython-*.pyc
+test_*.cpython-*.pyc
+
+# Virtual environments
+.venv/
+venv/
+env/
+.env
+
+# Python egg / build artifacts
+*.egg-info/
+dist/
+build/
+*.egg
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+Thumbs.db
+.DS_Store
+
+# Test output / transient files
+*.log
+gui_out.txt
+gui_err.txt
+solution.csv
+test_export.csv
+output/
+
+# Archives (don't re-ship ZIP inside ZIP)
+*.zip
+*.tar.gz
+*.7z
+
+# Jupyter
+*.ipynb_checkpoints/
+
+# Do NOT ignore:
+# __pycache__/merged_solver_cupy.cpython-311.pyc  ← obfuscated engine
+# __pycache__/sparse_qubo_solver.cpython-311.pyc  ← obfuscated engine
+# locetius_core.dll
+# liblocetius_core.so
